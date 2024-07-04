@@ -1,10 +1,8 @@
 let rootElment = document.getElementById('root');
 
-// rootElment.innerHTML = "<p>Hello form js</p>"
-
 async function getApiData()
 {
-    let respons = await fetch('https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=3cbf93ca943744a2bc449cbeae047c6b');
+    let respons = await fetch('https://newsapi.org/v2/top-headlines?country=us&category=technology&apiKey=3cbf93ca943744a2bc449cbeae047c6b');
     let data = await respons.json();
     return data.articles;
 }
@@ -34,6 +32,5 @@ function newsHtmlCollection(object) {
 
 (async function(){
     let arrayOfNews  = await getApiData();
-    
-   newsHtmlCollection(arrayOfNews);
+    newsHtmlCollection(arrayOfNews);
 })();
