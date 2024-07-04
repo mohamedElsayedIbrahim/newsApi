@@ -1,17 +1,14 @@
 let rootElment = document.getElementById('root');
 
-async function getApiData()
-{
-    let respons = await fetch('https://newsapi.org/v2/top-headlines?country=us&category=technology&apiKey=3cbf93ca943744a2bc449cbeae047c6b');
-    let data = await respons.json();
-    return data.articles;
-}
+fetch('https://newsapi.org/v2/top-headlines?country=us&category=technology&apiKey=3cbf93ca943744a2bc449cbeae047c6b')
+.then(response => response.json())
+.then(arrayOfNews=>{
 
-function newsHtmlCollection(object) {
-    let htmlCollection = ``;
-    for (const iterator of object) {
+    let articles = arrayOfNews.articles;
+    
+    for (const iterator of articles) {
 
-        htmlCollection += `
+        rootElment.insertAdjacentHTML('afterbegin', `
         <div class="news-card">
                     <div class="news-card-image">
                         <img src="${iterator.urlToImage}" class="width-100" alt="${iterator.title}">
@@ -24,13 +21,8 @@ function newsHtmlCollection(object) {
                         </p>
                     </div>
                 </div>
-        `;
+        `);
     }
-
-    rootElment.innerHTML = htmlCollection;
-}
-
-(async function(){
-    let arrayOfNews  = await getApiData();
-    newsHtmlCollection(arrayOfNews);
-})();
+}).catch((error)=>{
+    console.log(error);
+})
